@@ -1,1 +1,6 @@
-
+influxdb-client
+pandas
+streamlit
+matplotlib
+plotly
+scikit-learn
