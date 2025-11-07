@@ -16,6 +16,8 @@ query_api = client.query_api()
 st.title("📊 Tablero de Digitalización de Planta")
 st.write("Visualización de datos desde InfluxDB en tiempo real.")
 
+sensor2 = "bml890"
+
 sensor = st.selectbox("Selecciona el sensor:", ["DHT22", "MPU6050"])
 start = st.slider(
     "Selecciona el rango de tiempo de inicio (start):",
