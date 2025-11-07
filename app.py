@@ -21,15 +21,11 @@ h1,h2,h3,h4 { color: #e2e8f0 !important; }
 </style>
 """, unsafe_allow_html=True)
 
-# ---------- Credenciales (usar Secrets en Cloud) ----------
-INFLUXDB_URL    = st.secrets.get("INFLUXDB_URL",    os.getenv("INFLUXDB_URL"))
-INFLUXDB_TOKEN  = st.secrets.get("INFLUXDB_TOKEN",  os.getenv("INFLUXDB_TOKEN"))
-INFLUXDB_ORG    = st.secrets.get("INFLUXDB_ORG",    os.getenv("INFLUXDB_ORG"))
-INFLUXDB_BUCKET = st.secrets.get("INFLUXDB_BUCKET", os.getenv("INFLUXDB_BUCKET"))
-
-if not all([INFLUXDB_URL, INFLUXDB_TOKEN, INFLUXDB_ORG, INFLUXDB_BUCKET]):
-    st.error("Faltan credenciales de InfluxDB. Configura INFLUXDB_URL / INFLUXDB_TOKEN / INFLUXDB_ORG / INFLUXDB_BUCKET en Secrets.")
-    st.stop()
+# ---------- Credenciales (hardcoded como en tu código original) ----------
+INFLUXDB_URL    = "https://us-east-1-1.aws.cloud2.influxdata.com"
+INFLUXDB_TOKEN  = "JcKXoXE30JQvV9Ggb4-zv6sQc0Zh6B6Haz5eMRW0FrJEduG2KcFJN9-7RoYvVORcFgtrHR-Q_ly-52pD7IC6JQ=="
+INFLUXDB_ORG    = "0925ccf91ab36478"
+INFLUXDB_BUCKET = "EXTREME_MANUFACTURING"
 
 client = InfluxDBClient(url=INFLUXDB_URL, token=INFLUXDB_TOKEN, org=INFLUXDB_ORG)
 q = client.query_api()
@@ -122,9 +118,9 @@ st.subheader("Ambiente")
 if df_dht.empty:
     st.info("No hay datos de DHT22 en el rango.")
 else:
-    for var, titulo, unidad in [
-        ("temperatura", "Temperatura (°C)", "°C"),
-        ("humedad", "Humedad (%)", "%"),
+    for var, titulo in [
+        ("temperatura", "Temperatura (°C)"),
+        ("humedad", "Humedad (%)"),
     ]:
         sub = df_dht[df_dht["Variable"]==var]
         if not sub.empty:
